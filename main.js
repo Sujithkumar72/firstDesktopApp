@@ -5,6 +5,7 @@ const path = require("path");
 const {app, BrowserWindow, Menu} = electron;
 
 let mainWindow;
+let addWindow;
 
 app.on("ready", function(){
     mainWindow = new BrowserWindow({});
@@ -13,6 +14,9 @@ app.on("ready", function(){
         protocol: "file",
         slashes:true
     }));
+    mainWindow.on("closed", function(){
+        app.quit();
+    });
 
     const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
     Menu.setApplicationMenu(mainMenu);
@@ -23,7 +27,13 @@ app.on("ready", function(){
 const mainMenuTemplate =[
     {label:"File",
     submenu:[
-        {label:"Add item"},
+        {
+            label:"Add item",
+            click(){
+                createAddWindow();
+            }
+        
+        },
         {label:"clear items"},
         {label:"Quit",
         accelerator: process.platform == "darwin" ? "Command+Q" : "Ctrl+Q", 
@@ -36,5 +46,17 @@ const mainMenuTemplate =[
 
 
 function createAddWindow(){
-    
+    addWindow = new BrowserWindow({
+        width: 300,
+        height: 200,
+        title: "Add Item"
+    });
+    addWindow.loadURL(url.format({
+        pathname:path.join(__dirname,"addWindow.html"),
+        protocol: "file",
+        slashes:true    
+    }));
+    addWindow.on("closed", function(){
+        addWindow =null;
+    });
 }
