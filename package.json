@@ -1,0 +1,14 @@
+{
+  "name": "electron-app",
+  "version": "1.0.0",
+  "description": "First desktop Application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "sujith kumar",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^12.0.2"
+  }
+}
